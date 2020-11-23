@@ -15,7 +15,7 @@ static char *font2[] = {
     "JoyPixels:pixelsize=13:antialias=true:autohint=true",
     "icomoon\\-feather:pixelsize=14",
 };
-static int borderpx = 2;
+static int borderpx = 0;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -214,8 +214,8 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
-	{ MODKEY,               XK_C,           clipcopy,       {.i =  0} },
-	{ MODKEY,               XK_V,           clippaste,      {.i =  0} },
+	{ MODKEY,               XK_c,           clipcopy,       {.i =  0} },
+	{ MODKEY,               XK_v,           clippaste,      {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
