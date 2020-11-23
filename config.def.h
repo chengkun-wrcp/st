@@ -5,13 +5,16 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
+
+static char *font = "Consolas NF:pixelsize=17:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
 /*	"Inconsolata for Powerline:pixelsize=12:antialias=true:autohint=true", */
 /*	"Hack Nerd Font Mono:pixelsize=11:antialias=true:autohint=true", */
+    "WenQuanYi Micro Hei:pixelsize=16:antialias=true:autohint=true",
+    "JoyPixels:pixelsize=13:antialias=true:autohint=true",
+    "icomoon\\-feather:pixelsize=14",
 };
-
 static int borderpx = 2;
 
 /*
@@ -81,6 +84,8 @@ static int bellvolume = 0;
 
 /* default TERM value */
 char *termname = "st-256color";
+char *WMname = "myst";
+char *WMclass = "st";
 
 /*
  * spaces per tab
@@ -100,36 +105,37 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* bg opacity */
-float alpha = 0.8;
+float alpha = 0.88;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
 	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
+	"#d54e53",
+	"#aaffaa",
+	"#e6db74",
+	"#6688ff",
+	"#b77ee0",
+	"#89ddff",
+	"#d3d7cf",
 
-	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
+	/* 8 bright colors:black,red,green,yellow,blue,magneta,cyan,white */
+	"#555753",
+	"#ff3334",
+	"#ddffa7",
+	"#ffe585",
+	"#9cc4ff",
+	"#c397d8",
+	"#a3f7ff",
+	"#eeeeec",
 
 	[255] = 0,
 
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#cccccc",
+	"#afbfbf",
 	"#555555",
-	"black",
+	"#191919",
+	"gray",
 };
 
 
@@ -185,10 +191,12 @@ static uint forcemousemod = ShiftMask;
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
 	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
-	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
-	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
-	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
-	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
+	// { ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
+	// { XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
+	// { ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
+	// { XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
+	{ XK_NO_MOD,            Button4,     kscrollup,      {.i = -1} },
+	{ XK_NO_MOD,            Button5,   kscrolldown,    {.i = -1} },
 };
 
 /* Internal keyboard shortcuts. */
@@ -206,12 +214,17 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
-	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
+	{ MODKEY,               XK_C,           clipcopy,       {.i =  0} },
+	{ MODKEY,               XK_V,           clippaste,      {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-	{ TERMMOD,              XK_Escape,      keyboard_select,{.i =  0} },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
+	{ XK_NO_MOD,            XK_Page_Up,     kscrollup,      {.i = -1} },
+	{ XK_NO_MOD,            XK_Page_Down,   kscrolldown,    {.i = -1} },
+	{ MODKEY,               XK_k,           kscrollup,      {.i =  1} },
+	{ MODKEY,               XK_j,           kscrolldown,    {.i =  1} },
+	{ MODKEY,               XK_Escape,      keyboard_select,{.i =  0} },
 };
 
 /*
